@@ -4,11 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pypathdub"
-version = "0.2.1"
+version = "0.2.2"
 description = "Project path strings between Windows, WSL, MSYS2/Mingw, and POSIX conventions."
 readme = "README.md"
 requires-python = ">=3.7"
-license = { file = "LICENSE" }
+license = "Unlicense"
+license-files = ["LICENSE"]
 authors = [
   { name = "warrentc3" }
 ]
@@ -17,7 +18,6 @@ classifiers = [
   "Development Status :: 3 - Alpha",
   "Environment :: Console",
   "Intended Audience :: Developers",
-  "License :: OSI Approved :: The Unlicense (Unlicense)",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
   "Topic :: Software Development :: Build Tools",
