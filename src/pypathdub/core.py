@@ -6,6 +6,7 @@ import platform
 import re
 import shutil
 import subprocess
+from typing import Dict, Optional, Tuple
 
 __all__ = ["FORMATS", "normalizePathString", "normalize_path_string"]
 
@@ -15,7 +16,7 @@ FORMATS = _PYTHON + _OSNATIVE
 _MINGW_MOUNT_RE = re.compile(r"^/[a-zA-Z]/")
 
 
-def _split_windows_root(pathstr: str) -> tuple[str, str, str]:
+def _split_windows_root(pathstr: str) -> Tuple[str, str, str]:
     drive, tail = ntpath.splitdrive(pathstr)
     root = ""
     if tail.startswith(("\\", "/")):
@@ -24,7 +25,7 @@ def _split_windows_root(pathstr: str) -> tuple[str, str, str]:
     return drive, root, tail
 
 
-def _split_posix_root(pathstr: str) -> tuple[str, str, str]:
+def _split_posix_root(pathstr: str) -> Tuple[str, str, str]:
     if pathstr.startswith("//") and not pathstr.startswith("///"):
         return "", "//", pathstr[2:]
     if pathstr.startswith("/"):
@@ -51,7 +52,7 @@ def _runtime_convention() -> str:
     return {"Windows": "windows", "Linux": "nix", "Darwin": "nix"}.get(platform.system(), "nix")
 
 
-def _decompose(pathstr: str, target_convention: str | None = None) -> dict[str, object]:
+def _decompose(pathstr: str, target_convention: Optional[str] = None) -> Dict[str, object]:
     win_drive, _ = ntpath.splitdrive(pathstr)
     if win_drive or "\\" in pathstr:
         drive, root, tail = _split_windows_root(pathstr)
@@ -98,7 +99,7 @@ def _decompose(pathstr: str, target_convention: str | None = None) -> dict[str, 
     }
 
 
-def _project(parts: dict[str, object], convention: str, python_safe: bool) -> str:
+def _project(parts: Dict[str, object], convention: str, python_safe: bool) -> str:
     segments = parts["segments"]
     assert isinstance(segments, list)
     drive = str(parts["drive"])
@@ -134,7 +135,7 @@ def _project(parts: dict[str, object], convention: str, python_safe: bool) -> st
     return ("/" if absolute else "") + "/".join(segments)
 
 
-def normalizePathString(pathstr: str, fmt: str | None = None) -> str:
+def normalizePathString(pathstr: str, fmt: Optional[str] = None) -> str:
     if fmt is not None and fmt not in FORMATS:
         raise ValueError(f"unknown fmt {fmt!r}; expected None or one of {FORMATS}")
     expanded = os.path.expandvars(os.path.expanduser(pathstr))
@@ -154,5 +155,5 @@ def normalizePathString(pathstr: str, fmt: str | None = None) -> str:
     return _project(_decompose(expanded, convention), convention, python_safe)
 
 
-def normalize_path_string(pathstr: str, fmt: str | None = None) -> str:
+def normalize_path_string(pathstr: str, fmt: Optional[str] = None) -> str:
     return normalizePathString(pathstr, fmt)

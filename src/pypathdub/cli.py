@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from typing import List, Optional
 
 from .core import FORMATS, normalizePathString
 
@@ -17,7 +18,7 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: Optional[List[str]] = None) -> int:
     args = build_parser().parse_args(argv)
     print(normalizePathString(args.pathstr, args.fmt))
     return 0
