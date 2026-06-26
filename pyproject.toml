@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pypathdub"
+version = "0.1.0"
+description = "Project path strings between Windows, WSL, MSYS2/Mingw, and POSIX conventions."
+readme = "README.md"
+requires-python = ">=3.7"
+license = { file = "LICENSE" }
+authors = [
+  { name = "warrentc3" }
+]
+keywords = ["path", "windows", "wsl", "msys2", "mingw"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: The Unlicense (Unlicense)",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Software Development :: Build Tools",
+  "Topic :: Utilities",
+]
+
+[project.scripts]
+pypathdub = "pypathdub.cli:main"
+normalize-path-string = "pypathdub.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
