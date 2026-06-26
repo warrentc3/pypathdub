@@ -1,0 +1,23 @@
+#!/bin/sh
+set -eu
+
+repo="$(git rev-parse --show-toplevel)"
+check_script="$repo/scripts/check_version_tag.py"
+
+while read -r local_ref local_sha remote_ref remote_sha
+do
+  if [ -z "${local_ref:-}" ]; then
+    continue
+  fi
+
+  if [ "$local_sha" = "0000000000000000000000000000000000000000" ]; then
+    continue
+  fi
+
+  case "$local_ref" in
+    refs/tags/*)
+      tag_name="${local_ref#refs/tags/}"
+      python "$check_script" "$tag_name"
+      ;;
+  esac
+done
