@@ -22,6 +22,12 @@ print(normalizePathString(r"C:\work\project\data.local", "python-mingw"))
 
 `normalize_path_string` is also exported as a Python-style alias.
 
+From a source checkout, the compatibility script is:
+
+```powershell
+python .\scripts\normalize_path_string.py 'C:\work\project\data.local' --fmt python-mingw
+```
+
 ## Formats
 
 - `python-windows`
