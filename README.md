@@ -30,11 +30,13 @@ python .\scripts\normalize_path_string.py 'C:\work\project\data.local' --fmt pyt
 
 ## Formats
 
-- `python-windows`
+- `python-win`
+- `python-winabsolute`
 - `python-nix`
 - `python-mingw`
 - `python-wsl`
-- `osnative-windows`
+- `osnative-win`
+- `osnative-winabsolute`
 - `osnative-nix`
 - `osnative-mingw`
 - `osnative-wsl`
@@ -42,3 +44,5 @@ python .\scripts\normalize_path_string.py 'C:\work\project\data.local' --fmt pyt
 The `python-*` formats use Python-literal-safe separators. The `osnative-*` formats use the native path style for that convention.
 
 Drive-backed Windows paths cannot be projected to plain `nix`; use Mingw or WSL when the drive mount is part of the target convention.
+
+The `winabsolute` formats require a Windows drive or UNC authority. Relative paths and plain POSIX absolute paths are rejected instead of resolved against the current working directory.
